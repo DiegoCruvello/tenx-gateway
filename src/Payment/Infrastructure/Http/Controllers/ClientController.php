@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use InvalidArgumentException;
 use Payment\Payment\Application\Service\ClientService;
 use Payment\Payment\Domain\Exception\ClientDomainException;
+use Payment\Payment\Domain\Exception\ClientNotFound;
+use Payment\Payment\Domain\Exception\CpfException;
 use Payment\Payment\Domain\ValueObject\CPF;
 use Payment\Payment\Infrastructure\Http\Requests\CreateClient;
 use Payment\Payment\Infrastructure\Resources\ClientResource;
@@ -27,7 +29,6 @@ class ClientController extends Controller
         } catch (ClientDomainException $e){
             return ClientResource::exception($e->getMessage(), $e->getCode());
         }
-
     }
 
     public function show(string $cpf): JsonResponse
@@ -36,11 +37,10 @@ class ClientController extends Controller
             $cpfValid = new CPF($cpf);
             $resp = $this->service->getClientByCpf((string)$cpfValid);
             return ClientResource::make($resp);
-        } catch (InvalidArgumentException $e){
+        } catch (CpfException $e){
             return ClientResource::exception($e->getMessage(), Response::HTTP_BAD_REQUEST);
-        } catch (ClientDomainException $e){
+        } catch (ClientNotFound $e){
             return ClientResource::exception($e->getMessage(), Response::HTTP_NOT_FOUND);
         }
-
     }
 }

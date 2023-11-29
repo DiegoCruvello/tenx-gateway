@@ -7,7 +7,7 @@ use Payment\Payment\Infrastructure\Http\Controllers\PaymentController;
 Route::prefix('client')
     ->group(function () {
        Route::post('/', [ClientController::class, 'store'])->name('client.store');
-       Route::get('/{cpfCnpj}', [ClientController::class, 'show'])->name('client.show');
+       Route::get('/{cpf}', [ClientController::class, 'show'])->name('client.show');
     });
 
 Route::prefix('payment')

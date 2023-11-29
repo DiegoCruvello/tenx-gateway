@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Payment\Payment\Application\DTO\InputCreateClient;
 use Payment\Payment\Domain\Entity\Client;
 use Payment\Payment\Domain\Exception\ClientDomainException;
+use Payment\Payment\Domain\Exception\ClientNotFound;
+use Payment\Payment\Domain\Exception\CpfException;
 use Payment\Payment\Domain\Repository\ClientRepositoryInterface;
 use Payment\Payment\Infrastructure\Client\Asaas;
 
@@ -24,7 +26,7 @@ class ClientRepository implements ClientRepositoryInterface
     public function create(InputCreateClient $dto): Client
     {
         if($this->clientExist($dto->cpfCnpj)){
-            throw new ClientDomainException('CPF já existe.', Response::HTTP_CONFLICT);
+            throw new CpfException('O CPF já existe.', Response::HTTP_CONFLICT);
         }
 
         try {
@@ -39,9 +41,9 @@ class ClientRepository implements ClientRepositoryInterface
             return Client::fromArray($data);
         } catch (GuzzleException $e) {
             if($e->getCode() === Response::HTTP_BAD_REQUEST){
-                throw new ClientDomainException('O CPF ou CNPJ informado é inválido.', $e->getCode());
+                throw new CpfException('O CPF informado é inválido.', Response::HTTP_BAD_REQUEST);
             }
-            throw new ClientDomainException('Error inesperado', $e->getCode());
+            throw new ClientDomainException('Error inesperado', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -55,11 +57,11 @@ class ClientRepository implements ClientRepositoryInterface
             $resp = $this->asaas->getAsaasClient()->get("v3/customers?cpfCnpj=$cpf");
             $contents = json_decode($resp->getBody()->getContents(), true);
             if($contents['data'] === []){
-                throw new ClientDomainException('Usuário não encontrado.');
+                throw new ClientNotFound('Usuário não encontrado.', Response::HTTP_NOT_FOUND);
             }
             return Client::fromArray($contents['data'][0]);
         } catch (GuzzleException $e) {
-            throw new ClientDomainException($e->getMessage());
+            throw new ClientDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -76,7 +78,7 @@ class ClientRepository implements ClientRepositoryInterface
             }
             return false;
         } catch (GuzzleException $e) {
-            throw new ClientDomainException($e->getMessage());
+            throw new ClientDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
