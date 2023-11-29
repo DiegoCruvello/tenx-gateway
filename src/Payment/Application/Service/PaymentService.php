@@ -10,7 +10,7 @@ use Payment\Payment\Domain\Entity\Pix;
 use Payment\Payment\Domain\Exception\PaymentDomainException;
 use Payment\Payment\Domain\Repository\PaymentRepositoryInterface;
 
-readonly class PaymentService
+class PaymentService
 {
     public function __construct(
         public PaymentRepositoryInterface $repository,

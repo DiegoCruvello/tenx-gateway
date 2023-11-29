@@ -7,7 +7,6 @@ use Payment\Payment\Application\DTO\InputCreateClient;
 use Payment\Payment\Application\Service\ClientService;
 use Payment\Payment\Domain\Entity\Client;
 use Payment\Payment\Domain\Exception\ClientDomainException;
-use Payment\Payment\Domain\Exception\CpfException;
 use Tests\TestCase;
 
 class ClientControllerTest extends TestCase
