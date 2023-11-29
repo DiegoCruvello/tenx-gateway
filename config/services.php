@@ -30,5 +30,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'client_asaas' => [
+        'base_uri' => env('ASAAS_BASE_URI'),
+        'api_key' => env('ASAAS_API_KEY'),
+    ]
 
 ];
