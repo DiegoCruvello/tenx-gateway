@@ -23,7 +23,7 @@ class PaymentControllerTest extends TestCase
             'billingType' => 'BOLETO',
             'customer' => 'cus_000005796310',
             'value' => 10.2,
-            'dueDate' => '2023-11-30'
+            'dueDate' => '2023-11-30',
         ];
 
         $expectedResponse = Boleto::fromArray([
@@ -31,7 +31,7 @@ class PaymentControllerTest extends TestCase
             'customer' => 'cus_000005796310',
             'status' => 'PENDING',
             'bankSlipUrl' => 'https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv',
-            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv'
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) use ($expectedResponse, $requestData) {
@@ -58,14 +58,14 @@ class PaymentControllerTest extends TestCase
             'billingType' => 'PIX',
             'customer' => 'cus_000005796310',
             'value' => 10.2,
-            'dueDate' => '2023-11-30'
+            'dueDate' => '2023-11-30',
         ];
 
         $expectedResponse = Pix::fromArray([
             'id' => 'pay_r74ngjk06hzxtppv',
             'customer' => 'cus_000005796310',
             'status' => 'PENDING',
-            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv'
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) use ($expectedResponse, $requestData) {
@@ -98,7 +98,7 @@ class PaymentControllerTest extends TestCase
                 'number' => '5162306219378829',
                 'expiryMonth' => '05',
                 'expiryYear' => '2024',
-                'ccv' => '318'
+                'ccv' => '318',
             ],
             'creditCardHolderInfo' => [
                 'name' => 'Marcelo Henrique Almeida',
@@ -108,8 +108,8 @@ class PaymentControllerTest extends TestCase
                 'addressNumber' => '277',
                 'addressComplement' => null,
                 'phone' => '4738010919',
-                'mobilePhone' => '47998781877'
-            ]
+                'mobilePhone' => '47998781877',
+            ],
         ];
 
         $expectedResponse = CreditCard::fromArray([
@@ -117,7 +117,7 @@ class PaymentControllerTest extends TestCase
             'customer' => 'cus_000005796310',
             'status' => 'PENDING',
             'invoiceUrl' => 'https://sandbox.asaas.com/i/5rvkm6cq98nywjx4',
-            'transactionReceiptUrl' => 'https://sandbox.asaas.com/i/5rvkm6cq98nywjx4'
+            'transactionReceiptUrl' => 'https://sandbox.asaas.com/i/5rvkm6cq98nywjx4',
         ]);
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) use ($expectedResponse, $requestData) {
@@ -149,7 +149,7 @@ class PaymentControllerTest extends TestCase
             'id' => 'pay_r74ngjk06hzxtppv',
             'customer' => 'cus_000005796310',
             'status' => 'PENDING',
-            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv'
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) use ($expectedResponse) {
@@ -172,7 +172,7 @@ class PaymentControllerTest extends TestCase
             'billingType' => 'BOLETO',
             'customer' => 'cus_000005796310',
             'value' => 10.2,
-            'dueDate' => '2023-11-30'
+            'dueDate' => '2023-11-30',
         ];
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) {
@@ -192,7 +192,7 @@ class PaymentControllerTest extends TestCase
             'billingType' => 'PIX',
             'customer' => 'cus_000005796310',
             'value' => 10.2,
-            'dueDate' => '2023-11-30'
+            'dueDate' => '2023-11-30',
         ];
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) {
@@ -218,7 +218,7 @@ class PaymentControllerTest extends TestCase
                 'number' => '5162306219378829',
                 'expiryMonth' => '05',
                 'expiryYear' => '2024',
-                'ccv' => '318'
+                'ccv' => '318',
             ],
             'creditCardHolderInfo' => [
                 'name' => 'Marcelo Henrique Almeida',
@@ -228,8 +228,8 @@ class PaymentControllerTest extends TestCase
                 'addressNumber' => '277',
                 'addressComplement' => null,
                 'phone' => '4738010919',
-                'mobilePhone' => '47998781877'
-            ]
+                'mobilePhone' => '47998781877',
+            ],
         ];
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) {
@@ -249,7 +249,7 @@ class PaymentControllerTest extends TestCase
             'billingType' => 'BOLETO',
             'customer' => 'cus_000005796310',
             'value' => 10.2,
-            'dueDate' => '2023-11-30'
+            'dueDate' => '2023-11-30',
         ];
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) {
@@ -269,7 +269,7 @@ class PaymentControllerTest extends TestCase
             'billingType' => 'PIX',
             'customer' => 'cus_000005796310',
             'value' => 10.2,
-            'dueDate' => '2023-11-30'
+            'dueDate' => '2023-11-30',
         ];
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) {
@@ -295,7 +295,7 @@ class PaymentControllerTest extends TestCase
                 'number' => '5162306219378829',
                 'expiryMonth' => '05',
                 'expiryYear' => '2024',
-                'ccv' => '318'
+                'ccv' => '318',
             ],
             'creditCardHolderInfo' => [
                 'name' => 'Marcelo Henrique Almeida',
@@ -305,8 +305,8 @@ class PaymentControllerTest extends TestCase
                 'addressNumber' => '277',
                 'addressComplement' => null,
                 'phone' => '4738010919',
-                'mobilePhone' => '47998781877'
-            ]
+                'mobilePhone' => '47998781877',
+            ],
         ];
 
         $this->instance(PaymentService::class, Mockery::mock(PaymentService::class, function ($mock) {

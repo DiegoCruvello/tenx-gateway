@@ -11,7 +11,7 @@ class InputConfirmReceivedTest extends TestCase
     {
         $dto = InputConfirmReceived::fromArray([
             'paymentDate' => '2023-11-29',
-            'value'=> 10.2
+            'value' => 10.2,
         ]);
 
         $this->assertInstanceOf(InputConfirmReceived::class, $dto);

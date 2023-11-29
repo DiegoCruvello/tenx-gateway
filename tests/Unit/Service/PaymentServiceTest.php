@@ -26,34 +26,34 @@ class PaymentServiceTest extends TestCase
     public function testShouldCreateCreditCardOrderSuccessfully(): void
     {
         $inputCreateOrder = InputCreateOrder::fromArray([
-            "customer" => "cus_000005796310",
-            "billingType" => "CREDIT_CARD",
-            "value" => 100.00,
-            "dueDate" => "2023-12-21",
-            "creditCard" => [
-                "holderName" => "marcelo h almeida",
-                "number" => "5162306219378829",
-                "expiryMonth" => "05",
-                "expiryYear" => "2024",
-                "ccv" => "318"
+            'customer' => 'cus_000005796310',
+            'billingType' => 'CREDIT_CARD',
+            'value' => 100.00,
+            'dueDate' => '2023-12-21',
+            'creditCard' => [
+                'holderName' => 'marcelo h almeida',
+                'number' => '5162306219378829',
+                'expiryMonth' => '05',
+                'expiryYear' => '2024',
+                'ccv' => '318',
             ],
-            "creditCardHolderInfo" => [
-                "name" => "Marcelo Henrique Almeida",
-                "email" => "marcelo.almeida@gmail.com",
-                "cpfCnpj" => "24971563792",
-                "postalCode" => "89223-005",
-                "addressNumber" => "277",
-                "addressComplement" => null,
-                "phone" => "4738010919",
-                "mobilePhone" => "47998781877"
-            ]
+            'creditCardHolderInfo' => [
+                'name' => 'Marcelo Henrique Almeida',
+                'email' => 'marcelo.almeida@gmail.com',
+                'cpfCnpj' => '24971563792',
+                'postalCode' => '89223-005',
+                'addressNumber' => '277',
+                'addressComplement' => null,
+                'phone' => '4738010919',
+                'mobilePhone' => '47998781877',
+            ],
         ]);
         $expectedCreditCard = CreditCard::fromArray([
-            "id" => "pay_r74ngjk06hzxtppv",
-            "customer" => "cus_000005796310",
-            "status" => "PENDING",
-            "transactionReceiptUrl" => "https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv",
-            "invoiceUrl" => "https://sandbox.asaas.com/i/r74ngjk06hzxtppv"
+            'id' => 'pay_r74ngjk06hzxtppv',
+            'customer' => 'cus_000005796310',
+            'status' => 'PENDING',
+            'transactionReceiptUrl' => 'https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv',
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->repository->expects('createOrderCreditCard')
@@ -68,17 +68,17 @@ class PaymentServiceTest extends TestCase
     public function testShouldCreateBoletoOrderSuccessfully(): void
     {
         $inputCreateOrder = InputCreateOrder::fromArray([
-            "customer" => "cus_000005796310",
-            "billingType" => "BOLETO",
-            "value" => 100.00,
-            "dueDate" => "2023-12-21",
+            'customer' => 'cus_000005796310',
+            'billingType' => 'BOLETO',
+            'value' => 100.00,
+            'dueDate' => '2023-12-21',
         ]);
         $expectedBoleto = Boleto::fromArray([
-            "id" => "pay_r74ngjk06hzxtppv",
-            "customer" => "cus_000005796310",
-            "status" => "PENDING",
-            "bankSlipUrl" => "https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv",
-            "invoiceUrl" => "https://sandbox.asaas.com/i/r74ngjk06hzxtppv"
+            'id' => 'pay_r74ngjk06hzxtppv',
+            'customer' => 'cus_000005796310',
+            'status' => 'PENDING',
+            'bankSlipUrl' => 'https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv',
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->repository->expects('createOrderBoleto')
@@ -93,16 +93,16 @@ class PaymentServiceTest extends TestCase
     public function testShouldCreatePixOrderSuccessfully(): void
     {
         $inputCreateOrder = InputCreateOrder::fromArray([
-            "customer" => "cus_000005796310",
-            "billingType" => "PIX",
-            "value" => 100.00,
-            "dueDate" => "2023-12-21",
+            'customer' => 'cus_000005796310',
+            'billingType' => 'PIX',
+            'value' => 100.00,
+            'dueDate' => '2023-12-21',
         ]);
         $expectedBoleto = Pix::fromArray([
-            "id" => "pay_r74ngjk06hzxtppv",
-            "customer" => "cus_000005796310",
-            "status" => "PENDING",
-            "invoiceUrl" => "https://sandbox.asaas.com/i/r74ngjk06hzxtppv"
+            'id' => 'pay_r74ngjk06hzxtppv',
+            'customer' => 'cus_000005796310',
+            'status' => 'PENDING',
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->repository->expects('createOrderPix')
@@ -122,11 +122,11 @@ class PaymentServiceTest extends TestCase
         ]);
         $paymentId = 'pay_r74ngjk06hzxtppv';
         $expectedPayment = Boleto::fromArray([
-            "id" => "pay_r74ngjk06hzxtppv",
-            "customer" => "cus_000005796310",
-            "status" => "PENDING",
-            "bankSlipUrl" => "https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv",
-            "invoiceUrl" => "https://sandbox.asaas.com/i/r74ngjk06hzxtppv"
+            'id' => 'pay_r74ngjk06hzxtppv',
+            'customer' => 'cus_000005796310',
+            'status' => 'PENDING',
+            'bankSlipUrl' => 'https://sandbox.asaas.com/b/pdf/r74ngjk06hzxtppv',
+            'invoiceUrl' => 'https://sandbox.asaas.com/i/r74ngjk06hzxtppv',
         ]);
 
         $this->repository->expects('confirmReceivedBoleto')

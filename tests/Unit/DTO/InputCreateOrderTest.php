@@ -12,8 +12,8 @@ class InputCreateOrderTest extends TestCase
         $dto = InputCreateOrder::fromArray([
             'billingType' => 'BOLETO',
             'customer' => '111111111111',
-            'value'=> 100.3,
-            'dueDate'=> '2023-11-11'
+            'value' => 100.3,
+            'dueDate' => '2023-11-11',
         ]);
 
         $this->assertInstanceOf(InputCreateOrder::class, $dto);

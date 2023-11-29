@@ -15,7 +15,7 @@ class ClientControllerTest extends TestCase
     {
         $requestData = [
             'name' => 'Teste',
-            'cpf' => '58176776017'
+            'cpf' => '58176776017',
         ];
 
         $this->instance(ClientService::class, Mockery::mock(ClientService::class, function ($mock) use ($requestData) {
@@ -56,7 +56,7 @@ class ClientControllerTest extends TestCase
     {
         $requestData = [
             'name' => 'Teste',
-            'cpf' => '00000000000'
+            'cpf' => '00000000000',
         ];
 
         $this->instance(ClientService::class, Mockery::mock(ClientService::class, function ($mock) use ($requestData) {

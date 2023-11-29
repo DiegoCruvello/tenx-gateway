@@ -11,7 +11,7 @@ class InputCreateClientTest extends TestCase
     {
         $dto = InputCreateClient::fromArray([
             'name' => 'teste teste',
-            'cpf'=> '00000000000'
+            'cpf' => '00000000000',
         ]);
 
         $this->assertInstanceOf(InputCreateClient::class, $dto);

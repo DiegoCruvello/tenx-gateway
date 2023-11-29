@@ -3,8 +3,6 @@
 namespace Tests\Unit\Repository;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use Mockery;
 use Payment\Payment\Application\DTO\InputCreateClient;
@@ -38,7 +36,7 @@ class ClientRepositoryTest extends TestCase
 
         $responseMock = new Response(200, [], json_encode(['data' => []]));
         $guzzleClientMock->allows('get')
-            ->with("v3/customers?cpfCnpj=00000000000")
+            ->with('v3/customers?cpfCnpj=00000000000')
             ->andReturns($responseMock);
 
         // Mock para a chamada 'post'
@@ -50,7 +48,7 @@ class ClientRepositoryTest extends TestCase
         $guzzleClientMock->allows('post')
             ->with('v3/customers', [
                 'json' => [
-                    $dto->toArray()
+                    $dto->toArray(),
                 ],
             ])
             ->andReturns($postResponseMock);
@@ -74,7 +72,7 @@ class ClientRepositoryTest extends TestCase
 
         $responseMock = new Response(200, [], json_encode(['data' => [false]]));
         $guzzleClientMock->allows('get')
-            ->with("v3/customers?cpfCnpj=00000000000")
+            ->with('v3/customers?cpfCnpj=00000000000')
             ->andReturns($responseMock);
 
         // Mock para a chamada 'post'
@@ -86,7 +84,7 @@ class ClientRepositoryTest extends TestCase
         $guzzleClientMock->allows('post')
             ->with('v3/customers', [
                 'json' => [
-                    $dto->toArray()
+                    $dto->toArray(),
                 ],
             ])
             ->andReturns($postResponseMock);
@@ -94,5 +92,3 @@ class ClientRepositoryTest extends TestCase
         $this->repository->create($dto);
     }
 }
-
-
