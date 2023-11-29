@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "dfe9dda0-4168-4b2d-90b2-7ffff10ae8cf",
+		"name": "Tenx Gateway Payment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15667407"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Create Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Diego Cruvello\",\n    \"cpf\": \"16978861758\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/client/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"client",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Client With Cpf or Cnpj",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/client/16978861758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"client",
+								"16978861758"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Criar Cobrança Boleto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"billingType\": \"BOLETO\",\n  \"customer\": \"cus_000005796310\",\n  \"value\": 10.2,\n  \"dueDate\": \"2023-11-30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/boleto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"boleto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Cobrança Pix",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"billingType\": \"PIX\",\n  \"customer\": \"cus_000005796310\",\n  \"value\": 178.2,\n  \"dueDate\": \"2023-11-30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/pix",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"pix"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Cobrança Cartão de Crédito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"customer\": \"cus_000005796310\",\n      \"billingType\": \"CREDIT_CARD\",\n      \"value\": 100.00,\n      \"dueDate\": \"2023-12-21\",\n      \"creditCard\": {\n        \"holderName\": \"marcelo h almeida\",\n        \"number\": \"5162306219378829\",\n        \"expiryMonth\": \"05\",\n        \"expiryYear\": \"2024\",\n        \"ccv\": \"318\"\n      },\n      \"creditCardHolderInfo\": {\n        \"name\": \"Marcelo Henrique Almeida\",\n        \"email\": \"marcelo.almeida@gmail.com\",\n        \"cpfCnpj\": \"24971563792\",\n        \"postalCode\": \"89223-005\",\n        \"addressNumber\": \"277\",\n        \"addressComplement\": null,\n        \"phone\": \"4738010919\",\n        \"mobilePhone\": \"47998781877\"\n      },\n      \"remoteIp\": \"116.213.42.532\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/credit_card",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"credit_card"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmar Boleto Recebido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"paymentDate\": \"2023-11-29\",\n  \"value\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/confirm/received/pay_sobjsflm7es48kk5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"confirm",
+								"received",
+								"pay_sobjsflm7es48kk5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
