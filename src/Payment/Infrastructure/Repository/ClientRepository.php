@@ -4,6 +4,7 @@ namespace Payment\Payment\Infrastructure\Repository;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Response;
 use Payment\Payment\Application\DTO\InputCreateClient;
 use Payment\Payment\Domain\Entity\Client;
 use Payment\Payment\Domain\Exception\ClientDomainException;
@@ -23,7 +24,7 @@ class ClientRepository implements ClientRepositoryInterface
     public function create(InputCreateClient $dto): Client
     {
         if($this->clientExist($dto->cpfCnpj)){
-            throw new ClientDomainException('Client Exist');
+            throw new ClientDomainException('CPF já existe.', Response::HTTP_CONFLICT);
         }
 
         try {
@@ -37,7 +38,10 @@ class ClientRepository implements ClientRepositoryInterface
             $data = json_decode($resp->getBody()->getContents(), true);
             return Client::fromArray($data);
         } catch (GuzzleException $e) {
-            throw new ClientDomainException($e->getMessage());
+            if($e->getCode() === Response::HTTP_BAD_REQUEST){
+                throw new ClientDomainException('O CPF ou CNPJ informado é inválido.', $e->getCode());
+            }
+            throw new ClientDomainException('Error inesperado', $e->getCode());
         }
     }
 
@@ -51,7 +55,7 @@ class ClientRepository implements ClientRepositoryInterface
             $resp = $this->asaas->getAsaasClient()->get("v3/customers?cpfCnpj=$cpf");
             $contents = json_decode($resp->getBody()->getContents(), true);
             if($contents['data'] === []){
-                throw new ClientDomainException('Client not found');
+                throw new ClientDomainException('Usuário não encontrado.');
             }
             return Client::fromArray($contents['data'][0]);
         } catch (GuzzleException $e) {

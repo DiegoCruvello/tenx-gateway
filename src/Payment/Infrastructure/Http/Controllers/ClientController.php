@@ -4,7 +4,10 @@ namespace Payment\Payment\Infrastructure\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use InvalidArgumentException;
 use Payment\Payment\Application\Service\ClientService;
+use Payment\Payment\Domain\Exception\ClientDomainException;
 use Payment\Payment\Domain\ValueObject\CPF;
 use Payment\Payment\Infrastructure\Http\Requests\CreateClient;
 use Payment\Payment\Infrastructure\Resources\ClientResource;
@@ -18,14 +21,26 @@ class ClientController extends Controller
 
     public function store(CreateClient $request): JsonResponse
     {
-        $resp = $this->service->create($request->toDTO());
-        return ClientResource::make($resp);
+        try {
+            $resp = $this->service->create($request->toDTO());
+            return ClientResource::make($resp);
+        } catch (ClientDomainException $e){
+            return ClientResource::exception($e->getMessage(), $e->getCode());
+        }
+
     }
 
     public function show(string $cpf): JsonResponse
     {
-        $cpfValid = new CPF($cpf);
-        $resp = $this->service->getClientByCpf((string)$cpfValid);
-        return ClientResource::make($resp);
+        try {
+            $cpfValid = new CPF($cpf);
+            $resp = $this->service->getClientByCpf((string)$cpfValid);
+            return ClientResource::make($resp);
+        } catch (InvalidArgumentException $e){
+            return ClientResource::exception($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        } catch (ClientDomainException $e){
+            return ClientResource::exception($e->getMessage(), Response::HTTP_NOT_FOUND);
+        }
+
     }
 }

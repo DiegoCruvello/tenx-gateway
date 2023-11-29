@@ -6,10 +6,10 @@ use Payment\Payment\Application\DTO\InputCreateClient;
 use Payment\Payment\Domain\Entity\Client;
 use Payment\Payment\Domain\Repository\ClientRepositoryInterface;
 
-readonly class ClientService
+class ClientService
 {
     public function __construct(
-        public ClientRepositoryInterface $repository
+        public readonly ClientRepositoryInterface $repository
     ) {
     }
 
