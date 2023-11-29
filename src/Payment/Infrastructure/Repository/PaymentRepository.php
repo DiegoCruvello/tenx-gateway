@@ -9,7 +9,10 @@ use Payment\Payment\Application\DTO\InputCreateOrder;
 use Payment\Payment\Domain\Entity\Boleto;
 use Payment\Payment\Domain\Entity\CreditCard;
 use Payment\Payment\Domain\Entity\Pix;
+use Payment\Payment\Domain\Exception\CustomerException;
 use Payment\Payment\Domain\Exception\PaymentDomainException;
+use Payment\Payment\Domain\Exception\ReceivedException;
+use Payment\Payment\Domain\Exception\ReceivedNotFound;
 use Payment\Payment\Domain\Repository\PaymentRepositoryInterface;
 use Payment\Payment\Infrastructure\Client\Asaas;
 
@@ -36,7 +39,10 @@ class PaymentRepository implements PaymentRepositoryInterface
             $data = json_decode($resp->getBody()->getContents(), true);
             return CreditCard::fromArray($data);
         } catch (GuzzleException $e) {
-            throw new PaymentDomainException($e->getMessage());
+            if($e->getCode() === Response::HTTP_BAD_REQUEST){
+                throw new CustomerException('O customer informado não existe.', Response::HTTP_BAD_REQUEST);
+            }
+            throw new PaymentDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -56,7 +62,10 @@ class PaymentRepository implements PaymentRepositoryInterface
             $data = json_decode($resp->getBody()->getContents(), true);
             return Boleto::fromArray($data);
         } catch (GuzzleException $e) {
-            throw new PaymentDomainException($e->getMessage());
+            if($e->getCode() === Response::HTTP_BAD_REQUEST){
+                throw new CustomerException('O customer informado não existe.', Response::HTTP_BAD_REQUEST);
+            }
+            throw new PaymentDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -76,7 +85,10 @@ class PaymentRepository implements PaymentRepositoryInterface
             $data = json_decode($resp->getBody()->getContents(), true);
             return Pix::fromArray($data);
         } catch (GuzzleException $e) {
-            throw new PaymentDomainException($e->getMessage());
+            if($e->getCode() === Response::HTTP_BAD_REQUEST){
+                throw new CustomerException('O customer informado não existe.', Response::HTTP_BAD_REQUEST);
+            }
+            throw new PaymentDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -97,9 +109,12 @@ class PaymentRepository implements PaymentRepositoryInterface
             return $data['bankSlipUrl'] === null ? Pix::fromArray($data) : Boleto::fromArray($data);
         } catch (GuzzleException $e) {
             if($e->getCode() === Response::HTTP_BAD_REQUEST){
-                throw new PaymentDomainException('Essa fatura já está paga.');
+                throw new ReceivedException('Essa fatura já está paga.', Response::HTTP_CONFLICT);
             }
-            throw new PaymentDomainException($e->getMessage());
+            if($e->getCode() === Response::HTTP_NOT_FOUND){
+                throw new ReceivedNotFound('A fatura não foi encontrada', Response::HTTP_NOT_FOUND);
+            }
+            throw new PaymentDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
