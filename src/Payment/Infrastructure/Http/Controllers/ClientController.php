@@ -22,7 +22,7 @@ class ClientController extends Controller
         return ClientResource::make($resp);
     }
 
-    public function show(string $cpf)
+    public function show(string $cpf): JsonResponse
     {
         $cpfValid = new CPF($cpf);
         $resp = $this->service->getClientByCpf((string)$cpfValid);

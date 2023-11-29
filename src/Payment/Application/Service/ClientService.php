@@ -4,12 +4,12 @@ namespace Payment\Payment\Application\Service;
 
 use Payment\Payment\Application\DTO\InputCreateClient;
 use Payment\Payment\Domain\Entity\Client;
-use Payment\Payment\Infrastructure\Repository\ClientRepository;
+use Payment\Payment\Domain\Repository\ClientRepositoryInterface;
 
 readonly class ClientService
 {
     public function __construct(
-        public ClientRepository $repository
+        public ClientRepositoryInterface $repository
     ) {
     }
 

@@ -7,9 +7,10 @@ use GuzzleHttp\Exception\GuzzleException;
 use Payment\Payment\Application\DTO\InputCreateClient;
 use Payment\Payment\Domain\Entity\Client;
 use Payment\Payment\Domain\Exception\ClientDomainException;
+use Payment\Payment\Domain\Repository\ClientRepositoryInterface;
 use Payment\Payment\Infrastructure\Client\Asaas;
 
-class ClientRepository
+class ClientRepository implements ClientRepositoryInterface
 {
     public function __construct(
         public Asaas $asaas
