@@ -18,7 +18,7 @@ make docker-build
 Colocar as envs no file `.env`
 
 `ASAAS_BASE_URI=https://sandbox.asaas.com/api/`
-`ASAAS_API_KEY=$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNjk2NDk6OiRhYWNoX2RiMDRlMmYwLTcwYmMtNGE0Mi04ZTE4LTBiMmVkMjdiNDY5ZQ==`
+`ASAAS_API_KEY=`
 
 ## Testes
 
